@@ -1,39 +1,39 @@
 let puntos = 0;
+const puntosSpan = document.getElementById("puntos");
+const lista = document.getElementById("listaTareas");
+const estadoGato = document.getElementById("estadoGato");
+const imagenGato = document.querySelector(".gato");
 
 function agregarTarea() {
-  const input = document.getElementById('nuevaTarea');
-  const tareaTexto = input.value.trim();
+  const input = document.getElementById("nuevaTarea");
+  const texto = input.value.trim();
+  if (texto === "") return;
 
-  if (tareaTexto === '') {
-    alert('Por favor escribe una tarea.');
-    return;
-  }
-
-  const lista = document.getElementById('listaTareas');
-
-  const li = document.createElement('li');
-  li.textContent = tareaTexto;
-
-  const btnCompletar = document.createElement('button');
-  btnCompletar.textContent = '✔️';
-  btnCompletar.onclick = function () {
-    if (!li.classList.contains('completed')) {
-      li.classList.add('completed');
-      puntos += 10;
-      document.getElementById('puntos').textContent = puntos;
-      document.getElementById('estadoGato').textContent = '¡Buen trabajo! El gato está feliz 😺';
-    }
-  };
-
-  const btnEliminar = document.createElement('button');
-  btnEliminar.textContent = '❌';
-  btnEliminar.onclick = function () {
-    lista.removeChild(li);
-  };
-
-  li.appendChild(btnCompletar);
-  li.appendChild(btnEliminar);
+  const li = document.createElement("li");
+  li.innerHTML = `${texto} <button onclick="completarTarea(this)">✔️</button>`;
   lista.appendChild(li);
+  input.value = "";
+}
 
-  input.value = '';
+function completarTarea(btn) {
+  const li = btn.parentElement;
+  if (!li.classList.contains("completed")) {
+    li.classList.add("completed");
+    puntos += 10;
+    puntosSpan.textContent = puntos;
+
+   S
+    imagenGato.src = "gato_comiendo.png";
+    estadoGato.textContent = "¡Tu gato está comiendo! 🍽️";
+
+    setTimeout(() => {
+      if (puntos >= 50) {
+        imagenGato.src = "gato_feliz.png";
+        estadoGato.textContent = "¡Gracias por cuidarme! 😻";
+      } else {
+        imagenGato.src = "gato.png";
+        estadoGato.textContent = "¡Tu gato está feliz! 😺";
+      }
+    }, 1500);
+  }
 }
